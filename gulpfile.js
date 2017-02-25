@@ -11,7 +11,7 @@ gulp.task('html', function() {
 
 gulp.task('scripts', function() {
     return gulp.src('src/js/*.js')
-        .pipe(jshint('.jshintrc'))
+        .pipe(jshint())
         .pipe(jshint.reporter('default'))
         .pipe(gulp.dest('dist/js'))
         .pipe(notify({ message: 'Scripts task complete' }));
@@ -22,7 +22,6 @@ gulp.task('default', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('src/js/*.js', ['scripts']);
     livereload.listen();
-    gulp.watch(['dist/**']).on('change', livereload.changed);
+    gulp.watch(['src/**']).on('change', livereload.changed);
 });
