@@ -1,7 +1,7 @@
 var input = document.getElementsByTagName('input'),
     table = document.getElementById('table'),
     ctx = table.getContext('2d'),
-    areaMatrix = drawTable(), //array for clickable area coordinates
+    areaMatrix = drawTable(), //clickable area coordinates
     menuOpen = false;
 
 //re-draw table on input change
@@ -22,7 +22,7 @@ table.onclick = function(e) {
             if (menuOpen === true) {
                 areaMatrix = drawTable();
             }
-            //draw menu and add menu items to clickable area
+            //draw menu and add menu items to a clickable area
             areaMatrix = areaMatrix.concat(drawMenu(clickedArea[1]));
             menuOpen = true;
         //show dialog on item click
@@ -44,9 +44,9 @@ function drawTable(callback) {
         columns = k.value,
         width = columns * 50,
         height = rows * 30,
-        widthMargin = (columns < 3) ? 200 - width : 72, //set minimum width 200px
-        heightMargin = (rows < 5) ? 150 - height : 0, //set minimum height 150px
-        headerMatrix = [], //array for col headers coordinates
+        widthMargin = (columns < 3) ? 200 - width : 72, //minimum width 200px
+        heightMargin = (rows < 5) ? 150 - height : 0, //minimum height 150px
+        headerMatrix = [], //col headers coordinates
         shift; //shift cursor to get a single pixel line
 
     //add 4px to draw table border with 2px thickness
@@ -68,7 +68,7 @@ function drawTable(callback) {
                 ctx.textBaseline = 'top';
                 ctx.fillText(strCol, pos, 10);
                 //add header cell coordinates to array
-                headerMatrix.push({item: 'header:' + iCol, x: (iCol - 1) * 50 + shift, y: 2, w: 49, h: 29})
+                headerMatrix.push({item: 'header:' + iCol, x: (iCol - 1) * 50 + shift, y: 2, w: 49, h: 29});
             } else {
                 shift = 2.5;
                 ctx.lineWidth = 1;
@@ -98,7 +98,7 @@ function drawTable(callback) {
 //Draws dropdown menu for specified header and returns items coordinates
 function drawMenu(headerNum) {
     var titlePos = 84 / 2 - 5 * headerNum.toString().length, //calculate menu title position
-        menuItemsNum = (headerNum % 2 == 0) ? 2 : 3, //number of menu items: 2 for even, 3 for odd
+        menuItemsNum = (headerNum % 2 === 0) ? 2 : 3, //number of menu items: 2 for even, 3 for odd
         menuPosX = headerNum * 50 - 10,
         menuPosY = 30,
         itemsMatrix = [];
@@ -128,8 +128,8 @@ function drawMenu(headerNum) {
         //item separator
         ctx.strokeStyle = '#bbb';
         ctx.beginPath();
-        ctx.moveTo(menuPosX + 5, menuPosY + i * 30 + .5);
-        ctx.lineTo(menuPosX + 79, menuPosY + i * 30 + .5);
+        ctx.moveTo(menuPosX + 5, menuPosY + i * 30 + 0.5);
+        ctx.lineTo(menuPosX + 79, menuPosY + i * 30 + 0.5);
         ctx.stroke();
         //item
         ctx.fillStyle = '#000';
@@ -167,7 +167,7 @@ function drawPopup(item) {
     ctx.fillText('click to close', popupPosX + 51, popupPosY + 82);
 }
 
-//finds area where intersection occurred
+//returns area title where intersection occurred
 function intersection(area, x, y) {
     var intersectionArea = false;
     for (var i = 0; i < area.length; i++) {

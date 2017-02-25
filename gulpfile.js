@@ -6,15 +6,15 @@ var gulp = require('gulp'),
 gulp.task('html', function() {
     return gulp.src('src/*.html')
         .pipe(gulp.dest('dist'))
-        .pipe(notify({ message: 'Html task complete' }));
+        .pipe(notify({message: 'Html task complete'}));
 });
 
 gulp.task('scripts', function() {
     return gulp.src('src/js/*.js')
         .pipe(jshint())
-        .pipe(jshint.reporter('default'))
+        .pipe(jshint.reporter('jshint-stylish'))
         .pipe(gulp.dest('dist/js'))
-        .pipe(notify({ message: 'Scripts task complete' }));
+        .pipe(notify({message: 'Scripts task complete'}));
 });
 
 gulp.task('default', function() {
