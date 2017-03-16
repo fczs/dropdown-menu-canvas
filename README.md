@@ -7,13 +7,13 @@ Each column should has context menu as shown below.
 
 \------------------------
 |  1  |  2 |  3  |  4  |
-----------^========#----
-|     |   #    2   #   |
-----------#--------#----
-|     |   # Menu 1 #   |
-----------# Menu 2 #----
-|     |   ##########   |
-------------------------
+\----------\^========\#----
+|     |   \#    2   \#   |
+\----------\#--------\#----
+|     |   \# Menu 1 \#   |
+\----------\# Menu 2 \#----
+|     |   \##########   |
+\------------------------
 
 1. By clicking on column title context menu should be shown.
 2. Menu should has title and list of 2-3 items.
