@@ -5,6 +5,7 @@
 Draw table with "n" rows and "k" columns using canvas.
 Each column should has context menu as shown below.
 
+```sh
 \------------------------
 |  1  |  2 |  3  |  4  |
 \----------\^========\#----
@@ -14,6 +15,7 @@ Each column should has context menu as shown below.
 \----------\# Menu 2 \#----
 |     |   \##########   |
 \------------------------
+```
 
 1. By clicking on column title context menu should be shown.
 2. Menu should has title and list of 2-3 items.
