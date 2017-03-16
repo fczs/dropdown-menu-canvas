@@ -5,7 +5,7 @@
 Draw table with "n" rows and "k" columns using canvas.
 Each column should has context menu as shown below.
 
-------------------------
+\------------------------
 |  1  |  2 |  3  |  4  |
 ----------^========#----
 |     |   #    2   #   |
