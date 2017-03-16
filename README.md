@@ -21,3 +21,5 @@ Each column should has context menu as shown below.
 2. Menu should has title and list of 2-3 items.
 3. By clicking on menu item close menu and show dialog: 'Item x is clicked'.
 4. Menu title has to be equal to column title.
+
+[Working sample](https://35.157.21.3/canvas/)
