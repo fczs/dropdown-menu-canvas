@@ -42,49 +42,55 @@ function drawTable(callback) {
         k = document.getElementById('k'),
         rows = n.value,
         columns = k.value,
-        width = columns * 50,
-        height = rows * 30,
-        widthMargin = (columns < 3) ? 200 - width : 72, //minimum width 200px
+        colWidth = 50,
+        rowHeight = 30,
+        tableMarginRight = 72,
+        width = columns * colWidth,
+        height = rows * rowHeight,
+        widthMargin = (columns < 3) ? 200 - width : tableMarginRight, //minimum width 200px
         heightMargin = (rows < 5) ? 150 - height : 0, //minimum height 150px
         headerMatrix = [], //col headers coordinates
+        thickLine = 2, //2px line
+        thinLine = 1, //1px line
         shift; //shift cursor to get a single pixel line
 
     //add 4px to draw table border with 2px thickness
-    table.width = width + 4 + widthMargin;
+    table.width = width + thickLine * 2 + widthMargin;
     //add 4px to draw table border with 2px thickness
-    table.height = height + 4 + heightMargin;
-    ctx.lineWidth = 2;
-    ctx.strokeRect(1, 1, width + 2, height + 2);
+    table.height = height + thickLine * 2 + heightMargin;
+    ctx.lineWidth = thickLine;
+    ctx.strokeRect(1, 1, width + thickLine, height + thickLine);
 
     for (var iCol = 1; iCol <= columns; iCol++) {
         for (var iRow = 1; iRow <= rows; iRow++) {
-            if (iRow == 1) {
+            if (iRow === 1) {
                 var strCol = iCol.toString(),
-                    pos = iCol * 50 - 22 - 5 * strCol.length; //calculate col header position
-                ctx.lineWidth = 2;
+                    shiftColHeaderPos = 22,
+                    pos = iCol * colWidth - strCol.length * 5 - shiftColHeaderPos; //calculate col header position
+                ctx.lineWidth = thickLine;
                 shift = 2;
                 //write column title
                 ctx.font = 'bold 16px courier';
                 ctx.textBaseline = 'top';
                 ctx.fillText(strCol, pos, 10);
                 //add header cell coordinates to array
-                headerMatrix.push({item: 'header:' + iCol, x: (iCol - 1) * 50 + shift, y: 2, w: 49, h: 29});
+                headerMatrix.push({item: 'header:' + iCol, x: (iCol - 1) * colWidth + shift, y: thickLine, w: colWidth - 1, h: rowHeight - 1});
             } else {
                 shift = 2.5;
-                ctx.lineWidth = 1;
+                ctx.lineWidth = thinLine;
             }
             //horizontal lines for row borders
             if (iRow != rows) {
                 ctx.beginPath();
-                ctx.moveTo(2, iRow * 30 + shift);
-                ctx.lineTo(width + 2, iRow * 30 + shift);
+                ctx.moveTo(2, iRow * rowHeight + shift);
+                ctx.lineTo(width + 2, iRow * rowHeight + shift);
                 ctx.stroke();
             }
             //vertical lines for cell borders
             if (iCol != columns) {
                 ctx.beginPath();
-                ctx.moveTo(iCol * 50 + shift, (iRow - 1) * 30 + 2);
-                ctx.lineTo(iCol * 50 + shift, iRow * 30 + 2);
+                ctx.moveTo(iCol * colWidth + shift, (iRow - 1) * rowHeight + 2);
+                ctx.lineTo(iCol * colWidth + shift, iRow * rowHeight + 2);
                 ctx.stroke();
             }
         }
@@ -97,15 +103,17 @@ function drawTable(callback) {
 
 //Draws dropdown menu for specified header and returns items coordinates
 function drawMenu(headerNum) {
-    var titlePos = 84 / 2 - 5 * headerNum.toString().length, //calculate menu title position
+    var menuWidth = 84,
+        titlePos = menuWidth / 2 - 5 * headerNum.toString().length, //calculate menu title position
         menuItemsNum = (headerNum % 2 === 0) ? 2 : 3, //number of menu items: 2 for even, 3 for odd
         menuPosX = headerNum * 50 - 10,
         menuPosY = 30,
+        itemHeight = 30,
         itemsMatrix = [];
 
     //menu shadow
     ctx.fillStyle = 'rgba(0, 0, 0, .15)';
-    ctx.fillRect(menuPosX + 3, menuPosY + 3, 84, (menuItemsNum + 1) * 30);
+    ctx.fillRect(menuPosX + 3, menuPosY + 3, menuWidth, (menuItemsNum + 1) * itemHeight);
     //menu arrow
     ctx.beginPath();
     ctx.moveTo(menuPosX, menuPosY);
@@ -115,27 +123,27 @@ function drawMenu(headerNum) {
     ctx.fillStyle = '#eee';
     ctx.fill();
     //menu body
-    ctx.fillRect(menuPosX, menuPosY, 84, (menuItemsNum + 1) * 30);
+    ctx.fillRect(menuPosX, menuPosY, menuWidth, (menuItemsNum + 1) * itemHeight);
     //menu title
     ctx.fillStyle = '#000';
     ctx.font = 'bold 16px courier';
     ctx.textBaseline = 'top';
     ctx.fillText(headerNum, menuPosX + titlePos, menuPosY + 8);
     //add menu title coordinates to array
-    itemsMatrix.push({item: 'menuTitle', x: menuPosX, y: menuPosY, w: 84, h: 30});
+    itemsMatrix.push({item: 'menuTitle', x: menuPosX, y: menuPosY, w: menuWidth, h: itemHeight});
     //menu items
     for (var i = 1; i <= menuItemsNum; i++) {
         //item separator
         ctx.strokeStyle = '#bbb';
         ctx.beginPath();
-        ctx.moveTo(menuPosX + 5, menuPosY + i * 30 + 0.5);
-        ctx.lineTo(menuPosX + 79, menuPosY + i * 30 + 0.5);
+        ctx.moveTo(menuPosX + 5, menuPosY + i * itemHeight + 0.5);
+        ctx.lineTo(menuPosX + 79, menuPosY + i * itemHeight + 0.5);
         ctx.stroke();
         //item
         ctx.fillStyle = '#000';
-        ctx.fillText("Menu " + i, menuPosX + 8, menuPosY + 8 + i * 30);
+        ctx.fillText("Menu " + i, menuPosX + 8, menuPosY + 8 + i * itemHeight);
         //add item coordinates to array
-        itemsMatrix.push({item: 'menuItem:' + i, x: menuPosX, y: menuPosY + i * 30, w: 84, h: 30});
+        itemsMatrix.push({item: 'menuItem:' + i, x: menuPosX, y: menuPosY + i * itemHeight, w: menuWidth, h: itemHeight});
     }
     return itemsMatrix;
 }
